@@ -1,4 +1,6 @@
-﻿class Program
+﻿using System;
+
+class Program
 {
     static void Main()
     {
@@ -89,7 +91,7 @@
                         RegisterBook();
                         break;
                     case 2:
-                        ListBooksMenu();
+                        ShowListBooksMenu();
                         break;
                     case 3:
                         ViewBookDetail();
@@ -121,7 +123,7 @@
     static void RegisterBook()
     {
         Console.Clear();
-        Console.WriteLine("1) Registrar Libro");
+        Console.WriteLine("1.1) Registrar Libro");
 
         Console.WriteLine("Ingrese el codigo ISBN o Unico del libro que desea agregar");
         byte ISBN = byte.Parse(Console.ReadLine()!);
@@ -135,12 +137,12 @@
         Console.WriteLine("Ingrese el Año de Publicacion del libro que desea agregar");
         ushort AnioPublicacion = ushort.Parse(Console.ReadLine()!);
 
-        Console.WriteLine($"Has agregado exitosamente el libro:\nISBN: {ISBN}\nTitulo: {TituloLibro}\nCategoria: {CategoriaLibro}\nAño publicacion: {AnioPublicacion} ");
+        Console.WriteLine($"\n(SIMULACIÓN) Has agregado exitosamente el libro:\nISBN: {ISBN}\nTitulo: {TituloLibro}\nCategoria: {CategoriaLibro}\nAño publicacion: {AnioPublicacion}");
 
         Pausa();
     }
 
-    static void ListBooksMenu()
+    static void ShowListBooksMenu()
     {
         byte opcionListarLibros;
 
@@ -190,8 +192,8 @@
     {
         Console.Clear();
         Console.WriteLine("--- 1.2.1 Listado de Todos los Libros ---");
-        Console.WriteLine("[SIMULACIÓN] 1. ISBN: 101 | Título: Cien Años de Soledad | Autor: Gabriel García Márquez | Estado: Disponible");
-        Console.WriteLine("[SIMULACIÓN] 2. ISBN: 102 | Título: El Principito | Autor: Antoine de Saint-Exupéry | Estado: Prestado");
+        Console.WriteLine("(SIMULACIÓN) 1. ISBN: 101 | Título: Cien Años de Soledad | Autor: Gabriel García Márquez | Estado: Disponible");
+        Console.WriteLine("(SIMULACIÓN) 2. ISBN: 102 | Título: El Principito | Autor: Antoine de Saint-Exupéry | Estado: Prestado");
         Pausa();
     }
 
@@ -199,7 +201,7 @@
     {
         Console.Clear();
         Console.WriteLine("--- 1.2.2 Listado de Libros Disponibles ---");
-        Console.WriteLine("[SIMULACIÓN] 1. ISBN: 101 | Título: Cien Años de Soledad | Autor: Gabriel García Márquez | Estado: Disponible");
+        Console.WriteLine("(SIMULACIÓN) 1. ISBN: 101 | Título: Cien Años de Soledad | Autor: Gabriel García Márquez | Estado: Disponible");
         Pausa();
     }
 
@@ -207,7 +209,7 @@
     {
         Console.Clear();
         Console.WriteLine("--- 1.2.3 Listado de Libros Prestados ---");
-        Console.WriteLine("[SIMULACIÓN] 1. ISBN: 102 | Título: El Principito | Autor: Antoine de Saint-Exupéry | Estado: Prestado");
+        Console.WriteLine("(SIMULACIÓN) 1. ISBN: 102 | Título: El Principito | Autor: Antoine de Saint-Exupéry | Estado: Prestado");
         Pausa();
     }
 
@@ -218,7 +220,7 @@
         Console.Write("Ingrese ID / ISBN del libro a consultar: ");
         string id = Console.ReadLine()!;
 
-        Console.WriteLine($"\n[SIMULACIÓN] Detalle del libro con ID/ISBN '{id}':");
+        Console.WriteLine($"\n(SIMULACIÓN) Detalle del libro con ID/ISBN '{id}':");
         Console.WriteLine("Título: Cien Años de Soledad");
         Console.WriteLine("Autor: Gabriel García Márquez");
         Console.WriteLine("Categoría: Novela");
@@ -283,7 +285,7 @@
         Console.Write("Ingrese el Nuevo Título: ");
         string nuevoTitulo = Console.ReadLine()!;
 
-        Console.WriteLine($"\n[SIMULACIÓN] El título del libro '{id}' fue actualizado a: '{nuevoTitulo}'.");
+        Console.WriteLine($"\n(SIMULACIÓN) El título del libro '{id}' fue actualizado a: '{nuevoTitulo}'.");
         Pausa();
     }
 
@@ -297,7 +299,7 @@
         Console.Write("Ingrese el Nuevo Autor: ");
         string nuevoAutor = Console.ReadLine()!;
 
-        Console.WriteLine($"\n[SIMULACIÓN] El autor del libro '{id}' fue actualizado a: '{nuevoAutor}'.");
+        Console.WriteLine($"\n(SIMULACIÓN) El autor del libro '{id}' fue actualizado a: '{nuevoAutor}'.");
         Pausa();
     }
 
@@ -314,7 +316,7 @@
         Console.Write("Ingrese el Nuevo Año: ");
         string nuevoAnio = Console.ReadLine()!;
 
-        Console.WriteLine($"\n[SIMULACIÓN Categoría ({nuevaCat}) y Año ({nuevoAnio}) del libro '{id}' actualizados con éxito.");
+        Console.WriteLine($"\n(SIMULACIÓN) Categoría ({nuevaCat}) y Año ({nuevoAnio}) del libro '{id}' actualizados con éxito.");
         Pausa();
     }
 
@@ -325,8 +327,8 @@
         Console.Write("Ingrese ID/ISBN del libro a eliminar: ");
         string id = Console.ReadLine()!;
 
-        Console.WriteLine($"\n[SIMULACIÓN] Validando si el libro '{id}' está prestado...");
-        Console.WriteLine("[SIMULACIÓN] El libro no se encuentra prestado. ¡Eliminado exitosamente!");
+        Console.WriteLine($"\n(SIMULACIÓN) Validando si el libro '{id}' está prestado...");
+        Console.WriteLine("(SIMULACIÓN) El libro no se encuentra prestado. ¡Eliminado exitosamente!");
         Pausa();
     }
 
@@ -355,23 +357,19 @@
                 switch (opcionUsuario)
                 {
                     case 1:
-                        Console.WriteLine("\nHas seleccionado: Registrar usuario");
-                        Pausa();
+                        RegisterUser();
                         break;
                     case 2:
-                        Console.WriteLine("\nHas seleccionado: Listar usuarios");
-                        Pausa();
+                        ListUsers();
                         break;
                     case 3:
-                        Console.WriteLine("\nHas seleccionado: Ver detalle de usuario");
-                        Pausa();
+                        ViewUserDetail();
                         break;
                     case 4:
-                        ShowUpdateUserMenu();
+                        UpdateUserMenu();
                         break;
                     case 5:
-                        Console.WriteLine("\nHas seleccionado: Eliminar usuario");
-                        Pausa();
+                        DeleteUser();
                         break;
                     case 0:
                         Console.WriteLine("\nVolviendo al menú principal...");
@@ -391,14 +389,57 @@
         } while (opcionUsuario != 0);
     }
 
-    static void ShowUpdateUserMenu()
+    static void RegisterUser()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 2.1 Registrar Usuario ---");
+
+        Console.Write("Ingrese el Documento / ID del usuario: ");
+        string documento = Console.ReadLine()!;
+
+        Console.Write("Ingrese el Nombre completo del usuario: ");
+        string nombre = Console.ReadLine()!;
+
+        Console.Write("Ingrese el Contacto (Teléfono/Correo): ");
+        string contacto = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Usuario registrado exitosamente:");
+        Console.WriteLine($"Documento: {documento} | Nombre: {nombre} | Contacto: {contacto} | Estado: Activo");
+        Pausa();
+    }
+
+    static void ListUsers()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 2.2 Listado de Usuarios ---");
+        Console.WriteLine("(SIMULACIÓN) 1. Doc: 100123 | Nombre: Carlos Pérez | Contacto: 3001234567 | Estado: Activo");
+        Console.WriteLine("(SIMULACIÓN) 2. Doc: 100456 | Nombre: María Gómez | Contacto: 3119876543 | Estado: Activo");
+        Pausa();
+    }
+
+    static void ViewUserDetail()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 2.3 Ver Detalle de Usuario ---");
+        Console.Write("Ingrese el Documento / ID a consultar: ");
+        string documento = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Detalle del usuario con Documento '{documento}':");
+        Console.WriteLine("Nombre: Carlos Pérez");
+        Console.WriteLine("Contacto: 3001234567");
+        Console.WriteLine("Estado: Activo");
+        Console.WriteLine("Préstamos activos: 1");
+        Pausa();
+    }
+
+    static void UpdateUserMenu()
     {
         byte opcionActualizarUsuario;
 
         do
         {
             Console.Clear();
-            Console.WriteLine("2.4) Actualizar Usuario");
+            Console.WriteLine("2.4) Menú Actualizar Usuario");
             Console.WriteLine("-----------------------------");
             Console.WriteLine("1. Editar nombre");
             Console.WriteLine("2. Editar contacto");
@@ -412,16 +453,13 @@
                 switch (opcionActualizarUsuario)
                 {
                     case 1:
-                        Console.WriteLine("\nEditando nombre del usuario...");
-                        Pausa();
+                        EditUserName();
                         break;
                     case 2:
-                        Console.WriteLine("\nEditando contacto del usuario...");
-                        Pausa();
+                        EditUserContact();
                         break;
                     case 3:
-                        Console.WriteLine("\nCambiando estado (Activo/Inactivo)...");
-                        Pausa();
+                        ToggleUserActiveStatus();
                         break;
                     case 0:
                         break;
@@ -438,6 +476,57 @@
                 opcionActualizarUsuario = 99;
             }
         } while (opcionActualizarUsuario != 0);
+    }
+
+    static void EditUserName()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 2.4.1 Editar Nombre de Usuario ---");
+        Console.Write("Ingrese Documento del usuario: ");
+        string documento = Console.ReadLine()!;
+
+        Console.Write("Ingrese el Nuevo Nombre: ");
+        string nuevoNombre = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) El nombre del usuario '{documento}' fue actualizado a: '{nuevoNombre}'.");
+        Pausa();
+    }
+
+    static void EditUserContact()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 2.4.2 Editar Contacto de Usuario ---");
+        Console.Write("Ingrese Documento del usuario: ");
+        string documento = Console.ReadLine()!;
+
+        Console.Write("Ingrese el Nuevo Contacto: ");
+        string nuevoContacto = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) El contacto del usuario '{documento}' fue actualizado a: '{nuevoContacto}'.");
+        Pausa();
+    }
+
+    static void ToggleUserActiveStatus()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 2.4.3 Activar / Desactivar Usuario ---");
+        Console.Write("Ingrese Documento del usuario: ");
+        string documento = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Estado del usuario '{documento}' cambiado exitosamente (Invertido: Activo <-> Inactivo).");
+        Pausa();
+    }
+
+    static void DeleteUser()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 2.5 Eliminar Usuario ---");
+        Console.Write("Ingrese Documento del usuario a eliminar: ");
+        string documento = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Validando si el usuario '{documento}' tiene préstamos activos...");
+        Console.WriteLine("(SIMULACIÓN) El usuario no tiene préstamos activos. ¡Eliminado exitosamente!");
+        Pausa();
     }
 
     // --- MENÚ DE PRÉSTAMOS ---
