@@ -554,23 +554,19 @@ class Program
                 switch (opcionPrestamo)
                 {
                     case 1:
-                        Console.WriteLine("\nHas seleccionado: Crear préstamo");
-                        Pausa();
+                        CreateLoan();
                         break;
                     case 2:
                         ShowListLoansMenu();
                         break;
                     case 3:
-                        Console.WriteLine("\nHas seleccionado: Ver detalle de préstamo");
-                        Pausa();
+                        ViewLoanDetail();
                         break;
                     case 4:
-                        Console.WriteLine("\nHas seleccionado: Registrar devolución");
-                        Pausa();
+                        RegisterReturn();
                         break;
                     case 5:
-                        Console.WriteLine("\nHas seleccionado: Eliminar préstamo");
-                        Pausa();
+                        DeleteLoan();
                         break;
                     case 0:
                         Console.WriteLine("\nVolviendo al menú principal...");
@@ -588,6 +584,26 @@ class Program
                 opcionPrestamo = 99;
             }
         } while (opcionPrestamo != 0);
+    }
+
+    static void CreateLoan()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 3.1 Crear Préstamo ---");
+
+        Console.Write("Ingrese ID del Libro a prestar: ");
+        string idLibro = Console.ReadLine()!;
+
+        Console.Write("Ingrese Documento del Usuario solicitante: ");
+        string docUsuario = Console.ReadLine()!;
+
+        Console.WriteLine("\n(SIMULACIÓN) Ejecutando validaciones del sistema:");
+        Console.WriteLine("- Validando que el libro exista y esté disponible...");
+        Console.WriteLine("- Validando que el usuario esté activo...");
+        Console.WriteLine("- Validando que el usuario no tenga préstamos vencidos...");
+
+        Console.WriteLine($"\n(SIMULACIÓN) ¡Préstamo creado con éxito para el usuario '{docUsuario}' con el libro '{idLibro}'!");
+        Pausa();
     }
 
     static void ShowListLoansMenu()
@@ -611,16 +627,13 @@ class Program
                 switch (opcionListarPrestamos)
                 {
                     case 1:
-                        Console.WriteLine("\nListando todos los préstamos...");
-                        Pausa();
+                        ListLoansAll();
                         break;
                     case 2:
-                        Console.WriteLine("\nListando préstamos activos...");
-                        Pausa();
+                        ListLoansActive();
                         break;
                     case 3:
-                        Console.WriteLine("\nListando préstamos cerrados...");
-                        Pausa();
+                        ListLoansClosed();
                         break;
                     case 0:
                         break;
@@ -637,6 +650,72 @@ class Program
                 opcionListarPrestamos = 99;
             }
         } while (opcionListarPrestamos != 0);
+    }
+
+    static void ListLoansAll()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 3.2.1 Listado de Todos los Préstamos ---");
+        Console.WriteLine("(SIMULACIÓN) Préstamo #501 | Libro: 101 | Usuario: 100123 | Estado: Activo");
+        Console.WriteLine("(SIMULACIÓN) Préstamo #500 | Libro: 102 | Usuario: 100456 | Estado: Devuelto");
+        Pausa();
+    }
+
+    static void ListLoansActive()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 3.2.2 Listado de Préstamos Activos ---");
+        Console.WriteLine("(SIMULACIÓN) Préstamo #501 | Libro: 101 | Usuario: 100123 | Estado: Activo");
+        Pausa();
+    }
+
+    static void ListLoansClosed()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 3.2.3 Listado de Préstamos Cerrados (Devueltos) ---");
+        Console.WriteLine("(SIMULACIÓN) Préstamo #500 | Libro: 102 | Usuario: 100456 | Estado: Devuelto");
+        Pausa();
+    }
+
+    static void ViewLoanDetail()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 3.3 Ver Detalle de Préstamo ---");
+        Console.Write("Ingrese ID del Préstamo a consultar: ");
+        string idPrestamo = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Detalle del préstamo ID '{idPrestamo}':");
+        Console.WriteLine("Libro: Cien Años de Soledad (ISBN: 101)");
+        Console.WriteLine("Usuario: Carlos Pérez (Doc: 100123)");
+        Console.WriteLine("Fecha de Préstamo: 2026-03-01");
+        Console.WriteLine("Fecha de Devolución estimada: 2026-03-15");
+        Console.WriteLine("Estado: Activo");
+        Pausa();
+    }
+
+    static void RegisterReturn()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 3.4 Registrar Devolución de Préstamo ---");
+        Console.Write("Ingrese ID del Préstamo a devolver: ");
+        string idPrestamo = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Procesando devolución del préstamo ID '{idPrestamo}'...");
+        Console.WriteLine("(SIMULACIÓN) Préstamo marcado como 'Cerrado/Devuelto'.");
+        Console.WriteLine("(SIMULACIÓN) El libro asociado ha cambiado su estado a 'Disponible'.");
+        Pausa();
+    }
+
+    static void DeleteLoan()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 3.5 Eliminar Préstamo ---");
+        Console.Write("Ingrese ID del Préstamo a eliminar del registro: ");
+        string idPrestamo = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Validando que el préstamo ID '{idPrestamo}' esté cerrado y auditado...");
+        Console.WriteLine("(SIMULACIÓN) Registro de préstamo eliminado exitosamente del historial de consola.");
+        Pausa();
     }
 
     // --- MENÚ DE BÚSQUEDAS Y REPORTES ---
