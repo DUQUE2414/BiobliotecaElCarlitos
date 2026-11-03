@@ -1,6 +1,4 @@
-﻿using System;
-
-class Program
+﻿class Program
 {
     static void Main()
     {
@@ -88,22 +86,19 @@ class Program
                 switch (opcionLibro)
                 {
                     case 1:
-                        Console.WriteLine("\nHas seleccionado: Registrar libro");
-                        Pausa();
+                        RegisterBook();
                         break;
                     case 2:
-                        ShowListBooksMenu();
+                        ListBooksMenu();
                         break;
                     case 3:
-                        Console.WriteLine("\nHas seleccionado: Ver detalle de libro");
-                        Pausa();
+                        ViewBookDetail();
                         break;
                     case 4:
-                        ShowUpdateBookMenu();
+                        UpdateBookMenu();
                         break;
                     case 5:
-                        Console.WriteLine("\nHas seleccionado: Eliminar libro");
-                        Pausa();
+                        DeleteBook();
                         break;
                     case 0:
                         Console.WriteLine("\nVolviendo al menú principal...");
@@ -123,7 +118,29 @@ class Program
         } while (opcionLibro != 0);
     }
 
-    static void ShowListBooksMenu()
+    static void RegisterBook()
+    {
+        Console.Clear();
+        Console.WriteLine("1) Registrar Libro");
+
+        Console.WriteLine("Ingrese el codigo ISBN o Unico del libro que desea agregar");
+        byte ISBN = byte.Parse(Console.ReadLine()!);
+
+        Console.WriteLine("Ingrese el Titulo del libro que desea agregar");
+        string TituloLibro = Console.ReadLine()!;
+
+        Console.WriteLine("Ingrese la Categoria del libro que desea agregar");
+        string CategoriaLibro = Console.ReadLine()!;
+
+        Console.WriteLine("Ingrese el Año de Publicacion del libro que desea agregar");
+        ushort AnioPublicacion = ushort.Parse(Console.ReadLine()!);
+
+        Console.WriteLine($"Has agregado exitosamente el libro:\nISBN: {ISBN}\nTitulo: {TituloLibro}\nCategoria: {CategoriaLibro}\nAño publicacion: {AnioPublicacion} ");
+
+        Pausa();
+    }
+
+    static void ListBooksMenu()
     {
         byte opcionListarLibros;
 
@@ -144,16 +161,13 @@ class Program
                 switch (opcionListarLibros)
                 {
                     case 1:
-                        Console.WriteLine("\nListando todos los libros...");
-                        Pausa();
+                        ListBooksAll();
                         break;
                     case 2:
-                        Console.WriteLine("\nListando libros disponibles...");
-                        Pausa();
+                        ListBooksAvailable();
                         break;
                     case 3:
-                        Console.WriteLine("\nListando libros prestados...");
-                        Pausa();
+                        ListBooksBorrowed();
                         break;
                     case 0:
                         break;
@@ -172,7 +186,48 @@ class Program
         } while (opcionListarLibros != 0);
     }
 
-    static void ShowUpdateBookMenu()
+    static void ListBooksAll()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.2.1 Listado de Todos los Libros ---");
+        Console.WriteLine("[SIMULACIÓN] 1. ISBN: 101 | Título: Cien Años de Soledad | Autor: Gabriel García Márquez | Estado: Disponible");
+        Console.WriteLine("[SIMULACIÓN] 2. ISBN: 102 | Título: El Principito | Autor: Antoine de Saint-Exupéry | Estado: Prestado");
+        Pausa();
+    }
+
+    static void ListBooksAvailable()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.2.2 Listado de Libros Disponibles ---");
+        Console.WriteLine("[SIMULACIÓN] 1. ISBN: 101 | Título: Cien Años de Soledad | Autor: Gabriel García Márquez | Estado: Disponible");
+        Pausa();
+    }
+
+    static void ListBooksBorrowed()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.2.3 Listado de Libros Prestados ---");
+        Console.WriteLine("[SIMULACIÓN] 1. ISBN: 102 | Título: El Principito | Autor: Antoine de Saint-Exupéry | Estado: Prestado");
+        Pausa();
+    }
+
+    static void ViewBookDetail()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.3 Ver Detalle de Libro ---");
+        Console.Write("Ingrese ID / ISBN del libro a consultar: ");
+        string id = Console.ReadLine()!;
+
+        Console.WriteLine($"\n[SIMULACIÓN] Detalle del libro con ID/ISBN '{id}':");
+        Console.WriteLine("Título: Cien Años de Soledad");
+        Console.WriteLine("Autor: Gabriel García Márquez");
+        Console.WriteLine("Categoría: Novela");
+        Console.WriteLine("Año: 1967");
+        Console.WriteLine("Estado: Disponible");
+        Pausa();
+    }
+
+    static void UpdateBookMenu()
     {
         byte opcionActualizarLibro;
 
@@ -193,16 +248,13 @@ class Program
                 switch (opcionActualizarLibro)
                 {
                     case 1:
-                        Console.WriteLine("\nEditando título del libro...");
-                        Pausa();
+                        EditBookTitle();
                         break;
                     case 2:
-                        Console.WriteLine("\nEditando autor del libro...");
-                        Pausa();
+                        EditBookAuthor();
                         break;
                     case 3:
-                        Console.WriteLine("\nEditando año / categoría del libro...");
-                        Pausa();
+                        EditBookYearCategory();
                         break;
                     case 0:
                         break;
@@ -219,6 +271,63 @@ class Program
                 opcionActualizarLibro = 99;
             }
         } while (opcionActualizarLibro != 0);
+    }
+
+    static void EditBookTitle()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.4.1 Editar Título de Libro ---");
+        Console.Write("Ingrese ID/ISBN del libro: ");
+        string id = Console.ReadLine()!;
+
+        Console.Write("Ingrese el Nuevo Título: ");
+        string nuevoTitulo = Console.ReadLine()!;
+
+        Console.WriteLine($"\n[SIMULACIÓN] El título del libro '{id}' fue actualizado a: '{nuevoTitulo}'.");
+        Pausa();
+    }
+
+    static void EditBookAuthor()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.4.2 Editar Autor de Libro ---");
+        Console.Write("Ingrese ID/ISBN del libro: ");
+        string id = Console.ReadLine()!;
+
+        Console.Write("Ingrese el Nuevo Autor: ");
+        string nuevoAutor = Console.ReadLine()!;
+
+        Console.WriteLine($"\n[SIMULACIÓN] El autor del libro '{id}' fue actualizado a: '{nuevoAutor}'.");
+        Pausa();
+    }
+
+    static void EditBookYearCategory()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.4.3 Editar Año / Categoría ---");
+        Console.Write("Ingrese ID/ISBN del libro: ");
+        string id = Console.ReadLine()!;
+
+        Console.Write("Ingrese la Nueva Categoría: ");
+        string nuevaCat = Console.ReadLine()!;
+
+        Console.Write("Ingrese el Nuevo Año: ");
+        string nuevoAnio = Console.ReadLine()!;
+
+        Console.WriteLine($"\n[SIMULACIÓN Categoría ({nuevaCat}) y Año ({nuevoAnio}) del libro '{id}' actualizados con éxito.");
+        Pausa();
+    }
+
+    static void DeleteBook()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 1.5 Eliminar Libro ---");
+        Console.Write("Ingrese ID/ISBN del libro a eliminar: ");
+        string id = Console.ReadLine()!;
+
+        Console.WriteLine($"\n[SIMULACIÓN] Validando si el libro '{id}' está prestado...");
+        Console.WriteLine("[SIMULACIÓN] El libro no se encuentra prestado. ¡Eliminado exitosamente!");
+        Pausa();
     }
 
     // --- MENÚ DE USUARIOS ---
