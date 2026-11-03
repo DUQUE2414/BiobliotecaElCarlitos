@@ -63,7 +63,7 @@ class Program
         } while (opcionMenu != 6);
     }
 
-    // --- MENÚ DE LIBROS ---
+    // --- 1. MENÚ DE LIBROS ---
     static void ShowBooksMenu()
     {
         byte opcionLibro;
@@ -332,7 +332,7 @@ class Program
         Pausa();
     }
 
-    // --- MENÚ DE USUARIOS ---
+    // --- 2. MENÚ DE USUARIOS ---
     static void ShowUsersMenu()
     {
         byte opcionUsuario;
@@ -529,7 +529,7 @@ class Program
         Pausa();
     }
 
-    // --- MENÚ DE PRÉSTAMOS ---
+    // --- 3. MENÚ DE PRÉSTAMOS ---
     static void ShowLoansMenu()
     {
         byte opcionPrestamo;
@@ -718,7 +718,7 @@ class Program
         Pausa();
     }
 
-    // --- MENÚ DE BÚSQUEDAS Y REPORTES ---
+    // --- 4. MENÚ DE BÚSQUEDAS Y REPORTES ---
     static void ShowSearchReportsMenu()
     {
         byte opcionBusquedaReporte;
@@ -890,7 +890,7 @@ class Program
         Pausa();
     }
 
-    // --- MENÚ DE GUARDAR / CARGAR DATOS ---
+    // --- 5. MENÚ DE GUARDAR / CARGAR DATOS ---
     static void ShowPersistenceMenu()
     {
         byte opcionPersistencia;
@@ -978,17 +978,21 @@ class Program
         Pausa();
     }
 
+    // --- 6. FLUJO DE SALIDA ---
     static void ConfirmExitAndSave()
     {
-        Console.WriteLine("\n¿Desea guardar antes de salir? (S/N): ");
+        Console.Clear();
+        Console.WriteLine("--- 6. Salir del Sistema ---");
+        Console.Write("¿Desea guardar antes de salir? (S/N): ");
         string respuesta = Console.ReadLine()!.Trim().ToUpper();
 
         if (respuesta == "S")
         {
-            Console.WriteLine("(SIMULACIÓN) Guardando datos...");
+            Console.WriteLine("\n(SIMULACIÓN) Guardando datos pendientes...");
+            Console.WriteLine("(SIMULACIÓN) Datos guardados con éxito.");
         }
 
-        Console.WriteLine("Saliendo del sistema...");
+        Console.WriteLine("\nSaliendo del sistema. ¡Hasta pronto!");
     }
 
     static void Pausa()
