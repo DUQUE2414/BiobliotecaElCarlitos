@@ -913,15 +913,13 @@ class Program
                 switch (opcionPersistencia)
                 {
                     case 1:
-                        Console.WriteLine("\nGuardando datos...");
-                        Pausa();
+                        SaveData();
                         break;
                     case 2:
-                        Console.WriteLine("\nCargando datos...");
-                        Pausa();
+                        LoadData();
                         break;
                     case 3:
-                        ConfirmResetData();
+                        ResetData();
                         break;
                     case 0:
                         Console.WriteLine("\nVolviendo al menú principal...");
@@ -941,14 +939,37 @@ class Program
         } while (opcionPersistencia != 0);
     }
 
-    static void ConfirmResetData()
+    static void SaveData()
     {
-        Console.WriteLine("\n¿Está seguro de que desea reiniciar y vaciar todos los datos? (S/N): ");
+        Console.Clear();
+        Console.WriteLine("--- 5.1 Guardar Datos ---");
+        Console.WriteLine("(SIMULACIÓN) Serializando colecciones de libros, usuarios y préstamos...");
+        Console.WriteLine("(SIMULACIÓN) Guardando información en archivos de texto/JSON simulados...");
+        Console.WriteLine("(SIMULACIÓN) ¡Datos guardados exitosamente en disco!");
+        Pausa();
+    }
+
+    static void LoadData()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 5.2 Cargar Datos ---");
+        Console.WriteLine("(SIMULACIÓN) Leyendo archivos de almacenamiento simulados...");
+        Console.WriteLine("(SIMULACIÓN) Cargando registros de libros, usuarios y préstamos...");
+        Console.WriteLine("(SIMULACIÓN) ¡Datos cargados exitosamente al sistema!");
+        Pausa();
+    }
+
+    static void ResetData()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 5.3 Reiniciar Datos ---");
+        Console.Write("¿Está seguro de que desea reiniciar y vaciar todos los datos? (S/N): ");
         string respuesta = Console.ReadLine()!.Trim().ToUpper();
 
         if (respuesta == "S")
         {
-            Console.WriteLine("\nDatos reiniciados correctamente.");
+            Console.WriteLine("\n(SIMULACIÓN) Limpiando memorias, colecciones y registros...");
+            Console.WriteLine("(SIMULACIÓN) Datos reiniciados correctamente.");
         }
         else
         {
@@ -964,7 +985,7 @@ class Program
 
         if (respuesta == "S")
         {
-            Console.WriteLine("Guardando datos...");
+            Console.WriteLine("(SIMULACIÓN) Guardando datos...");
         }
 
         Console.WriteLine("Saliendo del sistema...");
