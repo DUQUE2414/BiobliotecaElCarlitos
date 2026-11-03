@@ -741,15 +741,13 @@ class Program
                 switch (opcionBusquedaReporte)
                 {
                     case 1:
-                        Console.WriteLine("\nHas seleccionado: Buscar libro");
-                        Pausa();
+                        SearchBook();
                         break;
                     case 2:
-                        Console.WriteLine("\nHas seleccionado: Buscar usuario");
-                        Pausa();
+                        SearchUser();
                         break;
                     case 3:
-                        ShowReportsMenu();
+                        ReportsMenu();
                         break;
                     case 0:
                         Console.WriteLine("\nVolviendo al menú principal...");
@@ -769,7 +767,33 @@ class Program
         } while (opcionBusquedaReporte != 0);
     }
 
-    static void ShowReportsMenu()
+    static void SearchBook()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 4.1 Buscar Libro ---");
+        Console.Write("Ingrese criterio de búsqueda (Título, Autor, ID/ISBN o Categoría): ");
+        string criterio = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Buscando coincidencias para '{criterio}'...");
+        Console.WriteLine("(SIMULACIÓN) Resultado encontrado:");
+        Console.WriteLine("- ISBN: 101 | Título: Cien Años de Soledad | Autor: Gabriel García Márquez | Cat: Novela | Estado: Disponible");
+        Pausa();
+    }
+
+    static void SearchUser()
+    {
+        Console.Clear();
+        Console.WriteLine("--- 4.2 Buscar Usuario ---");
+        Console.Write("Ingrese criterio de búsqueda (Nombre o Documento/ID): ");
+        string criterio = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Buscando coincidencias para '{criterio}'...");
+        Console.WriteLine("(SIMULACIÓN) Resultado encontrado:");
+        Console.WriteLine("- Doc: 100123 | Nombre: Carlos Pérez | Contacto: 3001234567 | Estado: Activo");
+        Pausa();
+    }
+
+    static void ReportsMenu()
     {
         byte opcionReportes;
 
@@ -791,20 +815,16 @@ class Program
                 switch (opcionReportes)
                 {
                     case 1:
-                        Console.WriteLine("\nGenerando reporte de préstamos por usuario...");
-                        Pausa();
+                        ReportByUser();
                         break;
                     case 2:
-                        Console.WriteLine("\nGenerando reporte de préstamos por libro...");
-                        Pausa();
+                        ReportByBook();
                         break;
                     case 3:
-                        Console.WriteLine("\nGenerando reporte de préstamos vencidos...");
-                        Pausa();
+                        ReportOverdue();
                         break;
                     case 4:
-                        Console.WriteLine("\nGenerando resumen general...");
-                        Pausa();
+                        ReportSummary();
                         break;
                     case 0:
                         break;
@@ -821,6 +841,53 @@ class Program
                 opcionReportes = 99;
             }
         } while (opcionReportes != 0);
+    }
+
+    static void ReportByUser()
+    {
+        Console.Clear();
+        Console.WriteLine("--- Reporte: Préstamos por Usuario ---");
+        Console.Write("Ingrese documento del usuario: ");
+        string doc = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Generando historial de préstamos para el usuario '{doc}':");
+        Console.WriteLine("- Préstamo #501 | Libro: Cien Años de Soledad | Fecha: 2026-03-01 | Estado: Activo");
+        Pausa();
+    }
+
+    static void ReportByBook()
+    {
+        Console.Clear();
+        Console.WriteLine("--- Reporte: Préstamos por Libro ---");
+        Console.Write("Ingrese ISBN o ID del libro: ");
+        string isbn = Console.ReadLine()!;
+
+        Console.WriteLine($"\n(SIMULACIÓN) Generando historial de circulación para el libro '{isbn}':");
+        Console.WriteLine("- Veces prestado en total: 4");
+        Console.WriteLine("- Último prestatario: Carlos Pérez (Doc: 100123)");
+        Pausa();
+    }
+
+    static void ReportOverdue()
+    {
+        Console.Clear();
+        Console.WriteLine("--- Reporte: Préstamos Vencidos ---");
+        Console.WriteLine("(SIMULACIÓN) Buscando préstamos cuya fecha límite ya expiró...");
+        Console.WriteLine("(SIMULACIÓN) Se encontraron 0 préstamos vencidos actualmente.");
+        Pausa();
+    }
+
+    static void ReportSummary()
+    {
+        Console.Clear();
+        Console.WriteLine("--- Reporte: Resumen General del Sistema ---");
+        Console.WriteLine("(SIMULACIÓN) Estadísticas actuales de la biblioteca:");
+        Console.WriteLine("- Total de libros registrados: 15");
+        Console.WriteLine("- Libros disponibles: 12");
+        Console.WriteLine("- Libros prestados: 3");
+        Console.WriteLine("- Total de usuarios activos: 8");
+        Console.WriteLine("- Préstamos activos totales: 3");
+        Pausa();
     }
 
     // --- MENÚ DE GUARDAR / CARGAR DATOS ---
