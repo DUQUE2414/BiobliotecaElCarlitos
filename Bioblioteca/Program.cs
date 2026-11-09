@@ -1,5 +1,4 @@
 ﻿using System;
-using BibliotecaElCarlitos.models;
 
 class Program
 {
@@ -126,11 +125,11 @@ class Program
         Console.Clear();
         Console.WriteLine("1.1) Registrar Libro");
 
+        Console.WriteLine("Ingrese el codigo ISBN o Unico del libro que desea agregar");
+        byte ISBN = byte.Parse(Console.ReadLine()!);
+
         Console.WriteLine("Ingrese el Titulo del libro que desea agregar");
         string TituloLibro = Console.ReadLine()!;
-
-        Console.WriteLine("Ingrese el Autor del libro que desea agregar");
-        string Autor = Console.ReadLine()!;
 
         Console.WriteLine("Ingrese la Categoria del libro que desea agregar");
         string CategoriaLibro = Console.ReadLine()!;
@@ -138,11 +137,7 @@ class Program
         Console.WriteLine("Ingrese el Año de Publicacion del libro que desea agregar");
         ushort AnioPublicacion = ushort.Parse(Console.ReadLine()!);
 
-        Libro nuevoLibro = new Libro(TituloLibro, Autor, CategoriaLibro, AnioPublicacion);
-
-        Console.WriteLine("\n(EXITO) Libro instanciado y creado mediante POO");
-        Console.WriteLine($"\nResumen corto: {nuevoLibro.ResumenCorto()}");
-        Console.WriteLine($"\nDetalle completo: {nuevoLibro.DetalleCompleto()}");
+        Console.WriteLine($"\n(SIMULACIÓN) Has agregado exitosamente el libro:\nISBN: {ISBN}\nTitulo: {TituloLibro}\nCategoria: {CategoriaLibro}\nAño publicacion: {AnioPublicacion}");
 
         Pausa();
     }
