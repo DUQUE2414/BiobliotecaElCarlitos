@@ -399,17 +399,19 @@ class Program
         Console.Clear();
         Console.WriteLine("--- 2.1 Registrar Usuario ---");
 
-        Console.Write("Ingrese el Documento / ID del usuario: ");
-        string documento = Console.ReadLine()!;
+        Console.Write("Ingrese el Documento del usuario: ");
+        string Documento = Console.ReadLine()!;
 
         Console.Write("Ingrese el Nombre completo del usuario: ");
-        string nombre = Console.ReadLine()!;
+        string Nombre = Console.ReadLine()!;
 
         Console.Write("Ingrese el Contacto (Teléfono/Correo): ");
-        string contacto = Console.ReadLine()!;
+        string Contacto = Console.ReadLine()!;
 
-        Console.WriteLine($"\n(SIMULACIÓN) Usuario registrado exitosamente:");
-        Console.WriteLine($"Documento: {documento} | Nombre: {nombre} | Contacto: {contacto} | Estado: Activo");
+        Usuario nuevoUsuario = new Usuario(Documento, Nombre, Contacto);
+        Console.WriteLine("\n(EXITO) Usuario instanciado y creado mediante POO");
+        Console.WriteLine($"\nResumen corto: {nuevoUsuario.ResumenCorto()}");
+        Console.WriteLine($"\nDetalle completo: {nuevoUsuario.DetalleCompleto()}");
         Pausa();
     }
 
