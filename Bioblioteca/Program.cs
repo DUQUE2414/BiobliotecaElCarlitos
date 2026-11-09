@@ -1,10 +1,47 @@
 ﻿using System;
+namespace BibliotecaElCarlitos.models{
 
 class Program
 {
     static void Main()
     {
+
+        EjecutarPruebasEvidencia();
+
         ShowMainMenu();
+    }
+
+    static void EjecutarPruebasEvidencia()
+    {
+        Console.Clear();
+        Console.WriteLine("DEMOSTRACIÓN DE OBJETOS Y MODELOS (POO)\n");
+
+        Libro libro1 = new Libro("Cien Años de Soledad", "Gabriel García Márquez", "Novela", 1967);
+        Libro libro2 = new Libro("El Principito", "Antoine de Saint-Exupéry", "Infantil", 1943);
+
+        Usuario usuario1 = new Usuario("100123", "Carlos Pérez", "3001234567");
+        Usuario usuario2 = new Usuario("100456", "María Gómez", "3119876543");
+
+        Prestamo prestamo1 = new Prestamo("P-001", libro1.Isbn, usuario1.Documento, DateTime.Now.AddDays(-10));
+
+        Console.WriteLine(" RESÚMENES ");
+        Console.WriteLine(libro1.ResumenCorto());
+        Console.WriteLine(libro2.ResumenCorto());
+        Console.WriteLine(usuario1.ResumenCorto());
+        Console.WriteLine(usuario2.ResumenCorto());
+        Console.WriteLine(prestamo1.ResumenCorto());
+
+        Console.WriteLine("\n DETALLES COMPLETOS Y VALIDACIONES ");
+        Console.WriteLine(libro1.DetalleCompleto());
+        Console.WriteLine($"¿Disponible?: {libro1.EstaDisponible}\n");
+
+        Console.WriteLine(usuario1.DetalleCompleto());
+        Console.WriteLine($"¿Activo?: {usuario1.EstaActivo}\n");
+
+        Console.WriteLine(prestamo1.DetalleCompleto());
+
+        Console.WriteLine("\nPresione cualquier tecla para entrar al Menú Principal...");
+        Console.ReadKey();
     }
 
     static void ShowMainMenu()
@@ -1000,4 +1037,5 @@ class Program
         Console.WriteLine("\nPresiona cualquier tecla para continuar");
         Console.ReadKey();
     }
+}
 }
