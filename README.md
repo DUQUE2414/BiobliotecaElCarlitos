@@ -3,6 +3,7 @@
 Este proyecto consiste en un prototipo funcional y simulado de un Sistema de Gestión de Biblioteca desarrollado en C# (.NET) para la consola. Su diseño aplica estándares de arquitectura modular, navegación estructurada, validaciones numéricas estrictas y control de versiones bajo la metodología Git Flow.
 
 ---
+
 ## Características del Sistema
 
 El sistema cuenta con 5 módulos principales simulados por consola y una sección de salida con confirmación de guardado:
@@ -22,7 +23,7 @@ El sistema cuenta con 5 módulos principales simulados por consola y una secció
   * Eliminación segura (valida que no tenga préstamos pendientes).
 
 * **3. Módulo de Préstamos**:
-  * Creación de préstamo con simulación de validaciones (existencia del libro, estado activo del usuario, sin sanciones).
+  * Creación de préstamo incorporando el nombre y documento del usuario, con simulación de validaciones (existencia del libro, estado activo del usuario, sin sanciones).
   * Submenú de listados (Todos, Activos y Cerrados/Devueltos).
   * Detalle de préstamo por ID.
   * Registro de devolución con cambio de estado de libro a 'Disponible'.
@@ -43,19 +44,44 @@ El sistema cuenta con 5 módulos principales simulados por consola y una secció
 
 ---
 
-## Arquitectura y Estructura del Código
+## Arquitectura y Estructura del Proyecto
 
-1. **Estructura Modular (`static void`)**:
-   Toda la lógica está dividida en métodos estáticos bien delimitados, evitando código monolítico en la función principal `Main()`.
+El código fuente está organizado bajo una arquitectura modular desacoplada en directorios independientes:
 
-2. **Navegación Jerárquica `do-while`**:
-   Cada menú y submenú funciona dentro de su propio bucle de control `do-while`, permitiendo al usuario retornar al menú padre ingresando la opción `0`.
+```text
+BibliotecaElCarlitos/
+└── Bioblioteca/
+    ├── Menus/
+    │   ├── MenuLibros.cs
+    │   ├── MenuPersistencia.cs
+    │   ├── MenuPrestamos.cs
+    │   ├── MenuReportes.cs
+    │   └── MenuUsuarios.cs
+    ├── models/
+    │   ├── EstadoPrestamo.cs
+    │   ├── Libros.cs
+    │   ├── Prestamo.cs
+    │   └── Usuario.cs
+    ├── Testing/
+    │   └── PooTesting.cs
+    ├── Program.cs
+    └── Bioblioteca.csproj
+```
 
-3. **Validaciones anti-cuelgue (`TryParse`)**:
-   Para prevenir excepciones no controladas como `FormatException`, todas las lecturas de menú utilizan `sbyte.TryParse` y `byte.TryParse`. Si el usuario ingresa texto o símbolos no numéricos, el sistema captura la inconsistencia y solicita el reintento.
+1. **Separación de Responsabilidades**:
+   * Los modelos de dominio (`Libro`, `Usuario`, `Prestamo`, `EstadoPrestamo`) residen en `models/`, bajo el namespace `BibliotecaElCarlitos.models`.
+   * La lógica de interfaz de consola reside en `Menus/`, bajo el namespace `BibliotecaElCarlitos.Menus`.
+   * Las pruebas de POO residen en `Testing/`.
+   * `Program.cs` solo contiene el punto de entrada, la demostración de objetos y el menú principal.
 
-4. **Etiquetado de Simulación `(SIMULACIÓN)`**:
-   Todas las respuestas operativas de la lógica de negocio muestran mensajes explicativos etiquetados con `(SIMULACIÓN)`.
+2. **Menús como clases `public static`**:
+   Cada módulo expone un único punto de entrada (`ShowBooksMenu()`, `ShowUsersMenu()`, `ShowLoansMenu()`, `ShowSearchReportsMenu()`, `ShowPersistenceMenu()`) y mantiene sus métodos auxiliares como `private static`. Esto evita código monolítico en `Main()`.
+
+3. **Navegación Jerárquica `do-while`**:
+   Cada menú y submenú funciona dentro de su propio bucle de control, permitiendo retornar al menú padre ingresando la opción `0`.
+
+4. **Validaciones anti-cuelgue (`TryParse`)**:
+   Para prevenir excepciones no controladas como `FormatException` u `OverflowException`, todas las lecturas de menú utilizan `byte.TryParse`. Si el usuario ingresa texto, símbolos o un número fuera de rango, el sistema muestra "Opción inválida" y solicita el reintento.
 
 ---
 
@@ -73,8 +99,10 @@ Para mantener un historial limpio y modular, se implementó el flujo de trabajo 
 
 Cada rama `feature/*` contuvo un conjunto de funciones específicas para garantizar la modularidad del código antes de realizar el merge hacia `develop`.
 
+> **Nota:** en las ramas originales las funciones se desarrollaron dentro de `Program.cs`. Posteriormente se refactorizaron a la estructura modular actual: cada módulo pasó a su propio archivo en `Menus/` y los modelos a `models/`.
+
 ### 1. Rama `feature/books-menu`
-Funciones integradas en esta rama:
+Funciones integradas en esta rama (hoy en `Menus/MenuLibros.cs`):
 * `ShowBooksMenu()`
 * `RegisterBook()`
 * `ShowListBooksMenu()`
@@ -102,7 +130,7 @@ git push origin develop
 ---
 
 ### 2. Rama `feature/users-menu`
-Funciones integradas en esta rama:
+Funciones integradas en esta rama (hoy en `Menus/MenuUsuarios.cs`):
 * `ShowUsersMenu()`
 * `RegisterUser()`
 * `ListUsers()`
@@ -127,7 +155,7 @@ git push origin develop
 ---
 
 ### 3. Rama `feature/loans-menu`
-Funciones integradas en esta rama:
+Funciones integradas en esta rama (hoy en `Menus/MenuPrestamos.cs`):
 * `ShowLoansMenu()`
 * `CreateLoan()`
 * `ShowListLoansMenu()`
@@ -152,7 +180,7 @@ git push origin develop
 ---
 
 ### 4. Rama `feature/search-reports-menu`
-Funciones integradas en esta rama:
+Funciones integradas en esta rama (hoy en `Menus/MenuReportes.cs`):
 * `ShowSearchReportsMenu()`
 * `SearchBook()`
 * `SearchUser()`
@@ -176,7 +204,7 @@ git push origin develop
 ---
 
 ### 5. Rama `feature/persistence-menu`
-Funciones integradas en esta rama:
+Funciones integradas en esta rama (hoy en `Menus/MenuPersistencia.cs`):
 * `ShowPersistenceMenu()`
 * `SaveData()`
 * `LoadData()`
@@ -199,7 +227,7 @@ git push origin develop
 Funciones integradas en esta rama:
 * `ConfirmExitAndSave()`
 
-Comandos Git ejecutados para la finalización e integración a `main`:
+Comandos Git ejecutados para la finalización e integración a `develop`:
 ```bash
 git checkout -b feature/exit-flow
 git add Program.cs
@@ -221,15 +249,16 @@ git push origin develop
 
 ### Pasos para ejecutar
 
-1. Clonar el repositorio:
+1. Clonar el repositorio y ubicarse en la rama de desarrollo:
    ```bash
-   git clone <URL_DEL_REPOSITO>
-   cd nombre-del-repositorio
+   git clone <URL_DEL_REPOSITORIO>
+   cd BibliotecaElCarlitos
+   git checkout develop
    ```
 
-2. Asegurarse de estar en la rama `develop` para desarrollo:
+2. Entrar a la carpeta del proyecto (donde está el archivo `.csproj`):
    ```bash
-   git checkout develop
+   cd Bioblioteca
    ```
 
 3. Compilar y ejecutar la aplicación:
@@ -244,9 +273,10 @@ git push origin develop
 | Criterio de Evidencia | Estado | Implementación en el Proyecto |
 | --- | --- | --- |
 | **Ramas `feature/*` creadas y fusionadas** | Cumplido | Ramas `feature/books-menu`, `users-menu`, `loans-menu`, `search-reports-menu`, `persistence-menu` y `exit-flow` integradas a `develop`. |
-| **Historial de Commits Claro** | Cumplido | Mensajes con la convención `feat: ...` especificando la función agregada en cada paso. |
+| **Historial de Commits Claro** | Cumplido | Mensajes con la convención `feat: ...` especificando la función agregada en cada paso, y commits de refactorización para la modularización. |
 | **Ramas Base `develop`** | Cumplido | Estrategia de integración continua en `develop`. |
-| **Navegación completa a Submenús** | Cumplido | Arquitectura modular con invocación a funciones secundarias desde menús principales. |
+| **Modularización por Carpetas** | Cumplido | Separación limpia entre `models`, `Menus` y `Testing` con sus respectivos namespaces. |
+| **Navegación completa a Submenús** | Cumplido | Arquitectura modular con invocación de métodos `public static` desde el menú principal. |
 | **Opción de Retorno al Menú Anterior** | Cumplido | Opción `0` presente en todos los submenús operados por ciclos `do-while`. |
 | **Confirmación de Acciones Sensibles** | Cumplido | Petición `(S/N)` en las funciones de reinicio y salida del sistema. |
-| **Validación de Entradas (`TryParse`)** | Cumplido | Lectura segura contra valores numéricos inválidos mediante `TryParse` en todos los menús. |
+| **Validación de Entradas (`TryParse`)** | Cumplido | Prevención de excepciones en consolas interactivas mediante `byte.TryParse` en todos los menús. |

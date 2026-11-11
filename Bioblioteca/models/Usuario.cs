@@ -25,13 +25,13 @@ namespace BibliotecaElCarlitos.models
         // 4. Métodos requeridos por la guía
         public string ResumenCorto()
         {
-            return $"Doc: {Documento} | Nombre: {Nombre}";
+            return $"Documento: {Documento} | Nombre: {Nombre}";
         }
 
         public string DetalleCompleto()
         {
             string estadoTexto = EstaActivo ? "Activo" : "Inactivo";
-            return $"Usuario -> Documento: {Documento}, Nombre: {Nombre}, Contacto: {Contacto}, Estado: {estadoTexto}";
+            return $"Usuario -> Documento: {Documento} | Nombre: {Nombre} | Contacto: {Contacto} | Estado: {estadoTexto}";
         }
         public override string ToString()
         {

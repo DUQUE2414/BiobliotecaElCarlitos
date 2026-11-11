@@ -5,6 +5,7 @@ namespace BibliotecaElCarlitos.models
         public string IdPrestamo { get; set; }
         public string IsbnLibro { get; set; }
         public string DocumentoUsuario { get; set; }
+        public string NombreUsuario { get; set; }
         public DateTime FechaPrestamo { get; set; }
         public DateTime? FechaDevolucion { get; set; }
         public EstadoPrestamo Estado { get; set; } = EstadoPrestamo.Activo;
@@ -15,11 +16,12 @@ namespace BibliotecaElCarlitos.models
             FechaDevolucion = null;
         }
 
-        public Prestamo(string idPrestamo, string isbnLibro, string documentoUsuario, DateTime fechaPrestamo)
+        public Prestamo(string idPrestamo, string isbnLibro, string documentoUsuario, string nombreUsuario, DateTime fechaPrestamo)
         {
             IdPrestamo = idPrestamo;
             IsbnLibro = isbnLibro;
             DocumentoUsuario = documentoUsuario;
+            NombreUsuario = nombreUsuario;
             FechaPrestamo = fechaPrestamo;
 
             FechaDevolucion = null;
@@ -48,13 +50,14 @@ namespace BibliotecaElCarlitos.models
         {
             string fechaDevStr = FechaDevolucion.HasValue ? FechaDevolucion.Value.ToShortDateString() : "Pendiente de devolución";
 
+
             return $"""
         ========================================
                  DETALLE DE PRÉSTAMO           
         ========================================
         ID Préstamo        : {IdPrestamo}
         ISBN Libro         : {IsbnLibro}
-        Documento Usuario  : {DocumentoUsuario}
+        Usuario            : {NombreUsuario} (Documento: {DocumentoUsuario})
         Fecha Préstamo     : {FechaPrestamo:dd/MM/yyyy}
         Fecha Devolución   : {fechaDevStr}
         Estado             : {Estado}
