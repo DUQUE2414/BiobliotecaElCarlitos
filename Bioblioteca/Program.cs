@@ -2,6 +2,7 @@
 using BibliotecaElCarlitos.models;
 using BibliotecaElCarlitos.Menus;
 using BibliotecaElCarlitos.Testing;
+using BibliotecaElCarlitos.Services;
 
 namespace BibliotecaElCarlitos.Menus
 {
@@ -10,6 +11,7 @@ namespace BibliotecaElCarlitos.Menus
         static void Main()
         {
             PooTesting.EjecutarPruebasEvidencia();
+            PruebaKpis.EjecutarSimulacionKpis();
             ShowMainMenu();
         }
 
