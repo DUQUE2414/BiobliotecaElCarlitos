@@ -1,7 +1,7 @@
 namespace BibliotecaElCarlitos.models
 {
 
-    class Libro
+    public class Libro
     {
         private static int ContadorIsbn = 100;
         public string Isbn { get; set; }
