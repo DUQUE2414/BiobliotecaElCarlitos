@@ -24,7 +24,7 @@ namespace BibliotecaElCarlitos.Services
         // 3. Buscar usuario por documento o nombre
         public List<Usuario> BuscarUsuarios(string criterio)
         {
-            return usuarios.Where(u => 
+            return usuarios.Where(u =>
                 u.Documento.Equals(criterio, StringComparison.OrdinalIgnoreCase) ||
                 u.Nombre.Contains(criterio, StringComparison.OrdinalIgnoreCase)
             ).ToList();
@@ -50,6 +50,13 @@ namespace BibliotecaElCarlitos.Services
         public int ObtenerUsuariosInactivos()
         {
             return usuarios.Count(u => !u.EstaActivo);
+        }
+
+        public bool EliminarUsuarioPorDocumento(string documento)
+        {
+            var usuario = usuarios.FirstOrDefault(u => u.Documento.Equals(documento, StringComparison.OrdinalIgnoreCase));
+            if (usuario == null) return false;
+            return usuarios.Remove(usuario);
         }
     }
 }

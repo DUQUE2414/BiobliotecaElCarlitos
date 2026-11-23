@@ -59,5 +59,17 @@ namespace BibliotecaElCarlitos.Services
             if (prestamos.Count == 0) return 0;
             return prestamos.Average(p => p.DiasTranscurridos());
         }
+
+        public List<Prestamo> BuscarPorEstado(EstadoPrestamo estado)
+        {
+            return prestamos.Where(p => p.Estado == estado).ToList();
+        }
+
+        public bool EliminarPrestamoPorId(string idPrestamo)
+        {
+            var prestamo = prestamos.FirstOrDefault(p => p.IdPrestamo.Equals(idPrestamo, StringComparison.OrdinalIgnoreCase));
+            if (prestamo == null) return false;
+            return prestamos.Remove(prestamo);
+        }
     }
 }

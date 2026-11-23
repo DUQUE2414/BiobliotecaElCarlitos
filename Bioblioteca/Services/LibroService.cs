@@ -58,5 +58,12 @@ namespace BibliotecaElCarlitos.Services
         {
             return libros.Count(l => !l.EstaDisponible);
         }
+
+        public bool EliminarLibroPorIsbn(string isbn)
+        {
+            var libro = libros.FirstOrDefault(l => l.Isbn.Equals(isbn, StringComparison.OrdinalIgnoreCase));
+            if (libro == null) return false;
+            return libros.Remove(libro);
+        }
     }
 }
