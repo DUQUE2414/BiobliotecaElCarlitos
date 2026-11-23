@@ -1,12 +1,13 @@
 using System;
+using BibliotecaElCarlitos.Services;
 
 namespace BibliotecaElCarlitos.Menus
 {
     public static class MenuReportes
     {
-        public static void ShowSearchReportsMenu()
+        public static void ShowSearchReportsMenu(ContextoBiblioteca biblioteca)
         {
-            byte opcion;
+            string? opcion;
             do
             {
                 Console.Clear();
@@ -19,55 +20,61 @@ namespace BibliotecaElCarlitos.Menus
                 Console.WriteLine("-----------------------------");
                 Console.Write("Selecciona una opción (0-3): ");
 
-                if (byte.TryParse(Console.ReadLine(), out opcion))
+                opcion = Console.ReadLine()?.Trim();
+
+                switch (opcion)
                 {
-                    switch (opcion)
-                    {
-                        case 1: SearchBook(); break;
-                        case 2: SearchUser(); break;
-                        case 3: ReportSummary(); break;
-                        case 0: break;
-                        default: Console.WriteLine("\nOpción no válida."); Pausa(); break;
-                    }
+                    case "1": SearchBook(biblioteca); break;
+                    case "2": SearchUser(biblioteca); break;
+                    case "3": ReportSummary(biblioteca); break;
+                    case "0": break;
+                    default:
+                        Console.WriteLine("\nOpción no válida.");
+                        Consola.Pausa();
+                        break;
                 }
-                else
-                {
-                    Console.WriteLine("\nOpción inválida.");
-                    Pausa();
-                }
-            } while (opcion != 0);
+            } while (opcion != "0");
         }
 
-        private static void SearchBook()
+        private static void SearchBook(ContextoBiblioteca biblioteca)
         {
-            Console.Clear();
-            Console.Write("Ingrese título o autor a buscar: ");
-            string criterio = Console.ReadLine()!;
-            Console.WriteLine($"\nBuscando coincidencias para '{criterio}'...");
-            Pausa();
+            Consola.Titulo("4.1) Buscar libro");
+            string criterio = Consola.LeerTexto("Ingrese ISBN, título o autor a buscar: ");
+            var resultados = biblioteca.Libros.BuscarLibros(criterio);
+
+            Console.WriteLine($"\nCoincidencias para '{criterio}': {resultados.Count}");
+            foreach (var l in resultados)
+                Console.WriteLine($"  * {l.DetalleCompleto()}");
+            Consola.Pausa();
         }
 
-        private static void SearchUser()
+        private static void SearchUser(ContextoBiblioteca biblioteca)
         {
-            Console.Clear();
-            Console.Write("Ingrese documento del usuario: ");
-            string doc = Console.ReadLine()!;
-            Console.WriteLine($"\nBuscando usuario '{doc}'...");
-            Pausa();
+            Consola.Titulo("4.2) Buscar usuario");
+            string criterio = Consola.LeerTexto("Ingrese documento o nombre del usuario: ");
+            var resultados = biblioteca.Usuarios.BuscarUsuarios(criterio);
+
+            Console.WriteLine($"\nCoincidencias para '{criterio}': {resultados.Count}");
+            foreach (var u in resultados)
+                Console.WriteLine($"  * {u.DetalleCompleto()}");
+            Consola.Pausa();
         }
 
-        private static void ReportSummary()
+        private static void ReportSummary(ContextoBiblioteca biblioteca)
         {
-            Console.Clear();
-            Console.WriteLine("--- Reporte General ---");
-            Console.WriteLine("Total de libros: 15 | Disponibles: 12 | Prestados: 3");
-            Pausa();
-        }
+            Consola.Titulo("4.3) Reporte general");
 
-        private static void Pausa()
-        {
-            Console.WriteLine("\nPresiona cualquier tecla para continuar...");
-            Console.ReadKey();
+            Console.WriteLine("LIBROS");
+            Console.WriteLine($"  Total: {biblioteca.Libros.ObtenerTotalLibros()} | Disponibles: {biblioteca.Libros.ObtenerLibrosDisponibles()} | Prestados: {biblioteca.Libros.ObtenerLibrosPrestados()}");
+
+            Console.WriteLine("\nUSUARIOS");
+            Console.WriteLine($"  Total: {biblioteca.Usuarios.ObtenerTotalUsuarios()} | Activos: {biblioteca.Usuarios.ObtenerUsuariosActivos()} | Inactivos: {biblioteca.Usuarios.ObtenerUsuariosInactivos()}");
+
+            Console.WriteLine("\nPRÉSTAMOS");
+            Console.WriteLine($"  Total: {biblioteca.Prestamos.ObtenerTotalPrestamos()} | Activos: {biblioteca.Prestamos.ObtenerPrestamosActivos()} | Devueltos: {biblioteca.Prestamos.ObtenerPrestamosDevueltos()} | Vencidos: {biblioteca.Prestamos.ObtenerPrestamosVencidos()}");
+            Console.WriteLine($"  Promedio de días de préstamo: {biblioteca.Prestamos.ObtenerPromedioDiasPrestamo():0.0}");
+
+            Consola.Pausa();
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using BibliotecaElCarlitos.models;
+using System;
+using System.Text;
 using BibliotecaElCarlitos.Menus;
 using BibliotecaElCarlitos.Testing;
 using BibliotecaElCarlitos.Services;
@@ -10,14 +10,18 @@ namespace BibliotecaElCarlitos.Menus
     {
         static void Main()
         {
-            PooTesting.EjecutarPruebasEvidencia();
-            PruebaKpis.EjecutarSimulacionKpis();
-            ShowMainMenu();
+            Console.OutputEncoding = Encoding.UTF8;
+
+            // Colecciones en memoria + datos predefinidos
+            var biblioteca = new ContextoBiblioteca();
+            biblioteca.CargarDatosPredefinidos();
+
+            ShowMainMenu(biblioteca);
         }
 
-        static void ShowMainMenu()
+        static void ShowMainMenu(ContextoBiblioteca biblioteca)
         {
-            byte opcionMenu;
+            string? opcion;
 
             do
             {
@@ -29,35 +33,32 @@ namespace BibliotecaElCarlitos.Menus
                 Console.WriteLine("3. Préstamos");
                 Console.WriteLine("4. Búsquedas y reportes");
                 Console.WriteLine("5. Guardar / Cargar datos");
-                Console.WriteLine("6. Salir");
+                Console.WriteLine("6. Ver Testing POO");
+                Console.WriteLine("7. Ver Testing KPIs");
+                Console.WriteLine("0. Salir");
                 Console.WriteLine("-----------------------------");
-                Console.Write("Selecciona una opción (1-6): ");
+                Console.Write("Selecciona una opción (0-7): ");
 
-                if (byte.TryParse(Console.ReadLine(), out opcionMenu))
+                opcion = Console.ReadLine()?.Trim();
+
+                switch (opcion)
                 {
-                    switch (opcionMenu)
-                    {
-                        case 1: MenuLibros.ShowBooksMenu(); break;
-                        case 2: MenuUsuarios.ShowUsersMenu(); break;
-                        case 3: MenuPrestamos.ShowLoansMenu(); break;
-                        case 4: MenuReportes.ShowSearchReportsMenu(); break;
-                        case 5: MenuPersistencia.ShowPersistenceMenu(); break;
-                        case 6:
-                            Console.WriteLine("\nSaliendo del sistema. ¡Hasta pronto!");
-                            break;
-                        default:
-                            Console.WriteLine("\nOpción no válida. Presione una tecla...");
-                            Console.ReadKey();
-                            break;
-                    }
+                    case "1": MenuLibros.ShowBooksMenu(biblioteca); break;
+                    case "2": MenuUsuarios.ShowUsersMenu(biblioteca); break;
+                    case "3": MenuPrestamos.ShowLoansMenu(biblioteca); break;
+                    case "4": MenuReportes.ShowSearchReportsMenu(biblioteca); break;
+                    case "5": MenuPersistencia.ShowPersistenceMenu(biblioteca); break;
+                    case "6": PooTesting.EjecutarPruebasEvidencia(); break;
+                    case "7": PruebaKpis.EjecutarSimulacionKpis(); break;
+                    case "0":
+                        Console.WriteLine("\nSaliendo del sistema. ¡Hasta pronto!");
+                        break;
+                    default:
+                        Console.WriteLine("\nOpción no válida. Presione una tecla...");
+                        Console.ReadKey(true);
+                        break;
                 }
-                else
-                {
-                    Console.WriteLine("\nOpción inválida. Presione una tecla...");
-                    Console.ReadKey();
-                    opcionMenu = 0;
-                }
-            } while (opcionMenu != 6);
+            } while (opcion != "0");
         }
     }
 }

@@ -30,6 +30,11 @@ namespace BibliotecaElCarlitos.Services
             ).ToList();
         }
 
+        public Usuario? BuscarPorDocumento(string documento)
+        {
+            return usuarios.FirstOrDefault(u => u.Documento.Equals(documento, StringComparison.OrdinalIgnoreCase));
+        }
+
         // 4. Ordenar usuarios por nombre
         public List<Usuario> OrdenarPorNombre()
         {
@@ -52,11 +57,31 @@ namespace BibliotecaElCarlitos.Services
             return usuarios.Count(u => !u.EstaActivo);
         }
 
+        // 6. Actualizar
+        public bool ActualizarUsuario(string documento, string nombre, string contacto, bool estaActivo)
+        {
+            var usuario = BuscarPorDocumento(documento);
+            if (usuario == null) return false;
+            usuario.Nombre = nombre;
+            usuario.Contacto = contacto;
+            usuario.EstaActivo = estaActivo;
+            return true;
+        }
+
+        // 7. Eliminar
         public bool EliminarUsuarioPorDocumento(string documento)
         {
-            var usuario = usuarios.FirstOrDefault(u => u.Documento.Equals(documento, StringComparison.OrdinalIgnoreCase));
+            var usuario = BuscarPorDocumento(documento);
             if (usuario == null) return false;
             return usuarios.Remove(usuario);
+        }
+
+        // 8. Reemplazar toda la colección
+        public void ReemplazarTodos(IEnumerable<Usuario> nuevos)
+        {
+            var copia = nuevos.ToList();
+            usuarios.Clear();
+            usuarios.AddRange(copia);
         }
     }
 }

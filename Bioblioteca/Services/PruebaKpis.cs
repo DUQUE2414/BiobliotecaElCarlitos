@@ -6,6 +6,8 @@ namespace BibliotecaElCarlitos.Services
 {
     public static class PruebaKpis
     {
+        // Usa servicios propios (independientes de los datos reales del menú),
+        // así la prueba de eliminación no afecta la colección principal.
         public static void EjecutarSimulacionKpis()
         {
             Console.Clear();
@@ -17,8 +19,8 @@ namespace BibliotecaElCarlitos.Services
             UsuarioService usuarioService = new UsuarioService();
             PrestamoService prestamoService = new PrestamoService();
 
-            Libro libro1 = new Libro("978-0307474728", "Cien Años de Soledad", "Novela", 1967);
-            Libro libro2 = new Libro("978-0142437209", "Don Quijote de la Mancha", "Clásico", 1605);
+            Libro libro1 = new Libro("Cien Años de Soledad", "Gabriel García Márquez", "Novela", 1967);
+            Libro libro2 = new Libro("Don Quijote de la Mancha", "Miguel de Cervantes", "Clásico", 1605);
             libroService.AgregarLibro(libro1);
             libroService.AgregarLibro(libro2);
 
@@ -34,6 +36,13 @@ namespace BibliotecaElCarlitos.Services
             Console.WriteLine($"- Total de libros registrados : {libroService.ObtenerTotalLibros()}");
             Console.WriteLine($"- Libros disponibles          : {libroService.ObtenerLibrosDisponibles()}");
             Console.WriteLine($"- Libros prestados            : {libroService.ObtenerLibrosPrestados()}\n");
+
+            // Prueba de eliminación en List<Libro>
+            Console.WriteLine("--- PRUEBA DE ELIMINACIÓN DE LIBRO ---");
+            Console.WriteLine($"- Total antes de eliminar     : {libroService.ObtenerTotalLibros()}");
+            bool eliminado = libroService.EliminarLibroPorIsbn(libro2.Isbn);
+            Console.WriteLine($"- Eliminar '{libro2.TituloLibro}' ({libro2.Isbn}): {(eliminado ? "Eliminado" : "No encontrado")}");
+            Console.WriteLine($"- Total después de eliminar   : {libroService.ObtenerTotalLibros()}\n");
 
             Console.WriteLine("--- KPI'S DE USUARIOS ---");
             Console.WriteLine($"- Total de usuarios           : {usuarioService.ObtenerTotalUsuarios()}");
@@ -60,8 +69,8 @@ namespace BibliotecaElCarlitos.Services
 
             MostrarComparacionArrayVsList();
 
-            Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-            Console.ReadKey();
+            Console.WriteLine("\nPresiona cualquier tecla para volver al menú principal...");
+            Console.ReadKey(true);
         }
 
         private static void MostrarComparacionArrayVsList()
@@ -71,11 +80,11 @@ namespace BibliotecaElCarlitos.Services
             Console.WriteLine("========================================");
 
             Libro[] arrayLibros = new Libro[1];
-            arrayLibros[0] = new Libro("ISBN-1", "Libro A", "Autor A", 2020);
+            arrayLibros[0] = new Libro("Libro A", "Autor A", "Categoría A", 2020);
 
             List<Libro> listaLibros = new List<Libro>();
-            listaLibros.Add(new Libro("ISBN-1", "Libro A", "Autor A", 2020));
-            listaLibros.Add(new Libro("ISBN-2", "Libro B", "Autor B", 2021));
+            listaLibros.Add(new Libro("Libro A", "Autor A", "Categoría A", 2020));
+            listaLibros.Add(new Libro("Libro B", "Autor B", "Categoría B", 2021));
 
             Console.WriteLine("1. ARRAY:");
             Console.WriteLine("   - Posee un tamaño FIJO definido al instanciarse.");

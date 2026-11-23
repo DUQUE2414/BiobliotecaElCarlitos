@@ -27,7 +27,17 @@ namespace BibliotecaElCarlitos.Services
             return prestamos.Where(p => p.IdPrestamo.Equals(id, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        // 4. Ordenar préstamos por fecha de préstamo (análogo a fecha límite)
+        public Prestamo? ObtenerPorId(string id)
+        {
+            return prestamos.FirstOrDefault(p => p.IdPrestamo.Equals(id, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public List<Prestamo> BuscarPorEstado(EstadoPrestamo estado)
+        {
+            return prestamos.Where(p => p.Estado == estado).ToList();
+        }
+
+        // 4. Ordenar préstamos por fecha de préstamo
         public List<Prestamo> OrdenarPorFecha()
         {
             return prestamos.OrderBy(p => p.FechaPrestamo).ToList();
@@ -60,16 +70,40 @@ namespace BibliotecaElCarlitos.Services
             return prestamos.Average(p => p.DiasTranscurridos());
         }
 
-        public List<Prestamo> BuscarPorEstado(EstadoPrestamo estado)
+        // 6. Generar un ID nuevo: P-001, P-002, ...
+        public string GenerarNuevoId()
         {
-            return prestamos.Where(p => p.Estado == estado).ToList();
+            int max = prestamos
+                .Select(p => int.TryParse(p.IdPrestamo.Replace("P-", ""), out int n) ? n : 0)
+                .DefaultIfEmpty(0)
+                .Max();
+            return $"P-{max + 1:000}";
         }
 
+        // 7. Registrar devolución (el menú se encarga de liberar el libro)
+        public bool RegistrarDevolucion(string idPrestamo)
+        {
+            var prestamo = ObtenerPorId(idPrestamo);
+            if (prestamo == null || prestamo.Estado == EstadoPrestamo.Devuelto) return false;
+            prestamo.Estado = EstadoPrestamo.Devuelto;
+            prestamo.FechaDevolucion = DateTime.Now;
+            return true;
+        }
+
+        // 8. Eliminar
         public bool EliminarPrestamoPorId(string idPrestamo)
         {
-            var prestamo = prestamos.FirstOrDefault(p => p.IdPrestamo.Equals(idPrestamo, StringComparison.OrdinalIgnoreCase));
+            var prestamo = ObtenerPorId(idPrestamo);
             if (prestamo == null) return false;
             return prestamos.Remove(prestamo);
+        }
+
+        // 9. Reemplazar toda la colección
+        public void ReemplazarTodos(IEnumerable<Prestamo> nuevos)
+        {
+            var copia = nuevos.ToList();
+            prestamos.Clear();
+            prestamos.AddRange(copia);
         }
     }
 }

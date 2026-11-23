@@ -32,6 +32,11 @@ namespace BibliotecaElCarlitos.Services
             ).ToList();
         }
 
+        public Libro? BuscarPorIsbn(string isbn)
+        {
+            return libros.FirstOrDefault(l => l.Isbn.Equals(isbn, StringComparison.OrdinalIgnoreCase));
+        }
+
         // 4. Ordenar libros por Título o Año
         public List<Libro> OrdenarPorTitulo()
         {
@@ -59,11 +64,32 @@ namespace BibliotecaElCarlitos.Services
             return libros.Count(l => !l.EstaDisponible);
         }
 
+        // 6. Actualizar
+        public bool ActualizarLibro(string isbn, string titulo, string autor, string categoria, ushort anio)
+        {
+            var libro = BuscarPorIsbn(isbn);
+            if (libro == null) return false;
+            libro.TituloLibro = titulo;
+            libro.Autor = autor;
+            libro.Categoria = categoria;
+            libro.AnioPublicacion = anio;
+            return true;
+        }
+
+        // 7. Eliminar
         public bool EliminarLibroPorIsbn(string isbn)
         {
-            var libro = libros.FirstOrDefault(l => l.Isbn.Equals(isbn, StringComparison.OrdinalIgnoreCase));
+            var libro = BuscarPorIsbn(isbn);
             if (libro == null) return false;
             return libros.Remove(libro);
+        }
+
+        // 8. Reemplazar toda la colección (datos predefinidos / cargar desde disco)
+        public void ReemplazarTodos(IEnumerable<Libro> nuevos)
+        {
+            var copia = nuevos.ToList();
+            libros.Clear();
+            libros.AddRange(copia);
         }
     }
 }
