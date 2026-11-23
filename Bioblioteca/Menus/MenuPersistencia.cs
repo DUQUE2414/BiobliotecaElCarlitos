@@ -13,8 +13,8 @@ namespace BibliotecaElCarlitos.Menus
                 Console.Clear();
                 Console.WriteLine("5) Menú de Guardar / Cargar Datos");
                 Console.WriteLine("-----------------------------");
-                Console.WriteLine("1. Guardar datos en disco");
-                Console.WriteLine("2. Cargar datos desde disco");
+                Console.WriteLine("1. Guardar datos");
+                Console.WriteLine("2. Cargar datos");
                 Console.WriteLine("3. Restaurar datos predefinidos");
                 Console.WriteLine("0. Volver al menú principal");
                 Console.WriteLine("-----------------------------");
@@ -36,47 +36,30 @@ namespace BibliotecaElCarlitos.Menus
             } while (opcion != "0");
         }
 
+        // Simulado: no se crea ningún archivo, solo se muestra por consola lo que hay en las colecciones.
         private static void SaveData(ContextoBiblioteca biblioteca)
         {
-            Consola.Titulo("5.1) Guardar datos");
-            try
-            {
-                PersistenciaService.Guardar(biblioteca);
-                Console.WriteLine($"Datos guardados correctamente en:\n{PersistenciaService.RutaArchivo}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"No se pudo guardar: {ex.Message}");
-            }
+            Consola.Titulo("5.1) Guardar datos (simulado)");
+            Console.WriteLine("Guardando datos... (Simulacion)\n");
+            MostrarDatos(biblioteca);
+            Console.WriteLine("\nDatos guardados exitosamente (simulación).");
             Consola.Pausa();
         }
 
+        // Simulado: los datos ya viven en las colecciones en memoria.
         private static void LoadData(ContextoBiblioteca biblioteca)
         {
-            Consola.Titulo("5.2) Cargar datos");
-            try
-            {
-                if (PersistenciaService.Cargar(biblioteca))
-                {
-                    Console.WriteLine("Datos cargados correctamente.");
-                    Console.WriteLine($"Libros: {biblioteca.Libros.ObtenerTotalLibros()} | Usuarios: {biblioteca.Usuarios.ObtenerTotalUsuarios()} | Préstamos: {biblioteca.Prestamos.ObtenerTotalPrestamos()}");
-                }
-                else
-                {
-                    Console.WriteLine("No existe un archivo guardado todavía. Primero usa 'Guardar datos'.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"No se pudo cargar: {ex.Message}");
-            }
+            Consola.Titulo("5.2) Cargar datos (simulado)");
+            Console.WriteLine("Cargando datos... (no se lee ningún archivo)\n");
+            MostrarDatos(biblioteca);
+            Console.WriteLine("\nDatos cargados exitosamente (simulación).");
             Consola.Pausa();
         }
 
         private static void RestoreDefaults(ContextoBiblioteca biblioteca)
         {
             Consola.Titulo("5.3) Restaurar datos predefinidos");
-            if (Consola.Confirmar("Se perderán los cambios no guardados. ¿Continuar?"))
+            if (Consola.Confirmar("Se perderán los cambios hechos. ¿Continuar?"))
             {
                 biblioteca.CargarDatosPredefinidos();
                 Console.WriteLine("\nDatos predefinidos restaurados.");
@@ -86,6 +69,21 @@ namespace BibliotecaElCarlitos.Menus
                 Console.WriteLine("\nOperación cancelada.");
             }
             Consola.Pausa();
+        }
+
+        private static void MostrarDatos(ContextoBiblioteca biblioteca)
+        {
+            Console.WriteLine($"--- LIBROS ({biblioteca.Libros.ObtenerTotalLibros()}) ---");
+            foreach (var l in biblioteca.Libros.ObtenerTodos())
+                Console.WriteLine($"  {l.DetalleCompleto()}");
+
+            Console.WriteLine($"\n--- USUARIOS ({biblioteca.Usuarios.ObtenerTotalUsuarios()}) ---");
+            foreach (var u in biblioteca.Usuarios.ObtenerTodos())
+                Console.WriteLine($"  {u.DetalleCompleto()}");
+
+            Console.WriteLine($"\n--- PRÉSTAMOS ({biblioteca.Prestamos.ObtenerTotalPrestamos()}) ---");
+            foreach (var p in biblioteca.Prestamos.ObtenerTodos())
+                Console.WriteLine($"  {p.ResumenCorto()}");
         }
     }
 }

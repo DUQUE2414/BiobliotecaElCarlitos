@@ -64,7 +64,7 @@ namespace BibliotecaElCarlitos.Menus
         {
             Consola.Titulo("1.2) Listado de libros");
             Console.WriteLine("Ordenar por: 1) ISBN  2) Título  3) Año");
-            Console.Write("Opción: ");
+            Console.Write("Opción (Enter = ISBN): ");
             string? orden = Console.ReadLine()?.Trim();
 
             List<Libro> lista = orden switch
