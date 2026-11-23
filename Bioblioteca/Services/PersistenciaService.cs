@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using BibliotecaElCarlitos.models;
 
@@ -17,11 +18,12 @@ namespace BibliotecaElCarlitos.Services
     public static class PersistenciaService
     {
         public static string RutaArchivo { get; } =
-            Path.Combine(AppContext.BaseDirectory, "biblioteca_datos.json");
+            Path.Combine(Directory.GetCurrentDirectory(), "biblioteca_datos.json");
 
         private static readonly JsonSerializerOptions Opciones = new JsonSerializerOptions
         {
-            WriteIndented = true
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
 
         public static void Guardar(ContextoBiblioteca biblioteca)
@@ -32,6 +34,7 @@ namespace BibliotecaElCarlitos.Services
                 Usuarios = biblioteca.Usuarios.ObtenerTodos(),
                 Prestamos = biblioteca.Prestamos.ObtenerTodos()
             };
+
             File.WriteAllText(RutaArchivo, JsonSerializer.Serialize(datos, Opciones));
         }
 
@@ -46,13 +49,12 @@ namespace BibliotecaElCarlitos.Services
             biblioteca.Usuarios.ReemplazarTodos(datos.Usuarios);
             biblioteca.Prestamos.ReemplazarTodos(datos.Prestamos);
 
-            // Evita ISBN repetidos al registrar libros nuevos después de cargar
             int maxIsbn = datos.Libros
                 .Select(l => int.TryParse(l.Isbn, out int n) ? n : 0)
                 .DefaultIfEmpty(100)
                 .Max();
-            Libro.SincronizarContador(Math.Max(100, maxIsbn));
 
+            Libro.SincronizarContador(Math.Max(100, maxIsbn));
             return true;
         }
     }
